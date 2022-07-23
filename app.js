@@ -16,7 +16,6 @@ mongoose.connect(uri,
 .then(() => console.log('Base de datos conectada'))
 .catch(e => console.log('error db:', e))
 
-
 const healthRoutes = require('./routes/health')
 const colaboradorRoutes = require('./routes/colaborador')
 
@@ -25,7 +24,8 @@ app.use('/api/colaborador', colaboradorRoutes)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
-    console.log(`servidor andando en: ${PORT}`)
+  console.warn(`servidor andando en: ${PORT}`)
+
 })
 
 module.exports = app

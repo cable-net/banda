@@ -6,13 +6,29 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app",
-    "start": "node app"
+    "start": "node app",
+    "lint": "npx eslint .",
+    "integration": "npx mocha 'integration/**/*.js' --recursive --timeout 60000 --exit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "@joi/date": "^2.1.0",
+    "chai": "^4.3.6",
     "dotenv": "^16.0.1",
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "mocha": "^10.0.0",
+    "mocha-junit-reporter": "^2.0.2",
+    "mongoose": "^6.4.6",
+    "supertest": "^6.2.4"
+  },
+  "devDependencies": {
+    "eslint": "^8.20.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.4",
+    "eslint-plugin-promise": "^6.0.0"
   }
 }
