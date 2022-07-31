@@ -1,28 +1,28 @@
 const mongoose = require('mongoose')
 
 const colaboradorSchema = mongoose.Schema({
-  nombre:{
+  nombre: {
     type: String,
     require: true,
     min: 2,
     max: 20
   },
-  segundoNombre:{
+  segundoNombre: {
     type: String,
     min: 2,
     max: 20
   },
-  paterno:{
+  paterno: {
     type: String,
     require: true,
     min: 2,
-    max: 20    
+    max: 20
   },
-  materno:{
+  materno: {
     type: String,
     require: true,
     min: 2,
-    max: 20    
+    max: 20
   },
   email: {
     type: String,
@@ -37,10 +37,10 @@ const colaboradorSchema = mongoose.Schema({
     max: 12
   },
   telefonoExtra: {
-  type: String,
-  required: true,
-  min: 12,
-  max: 12
+    type: String,
+    required: true,
+    min: 12,
+    max: 12
   },
   fechaNacimiento: {
     type: Date,
@@ -83,7 +83,7 @@ const colaboradorSchema = mongoose.Schema({
   estado: {
     type: String,
     required: true,
-    enum: ['AGUASCALIENTES', 'BAJA CALIFORNIA','BAJA CALIFORNIA SUR','CAMPECHE','CHIAPAS','CHIHUAHUA','CIUDAD DE MÉXICO','COAHUILA','COLIMA','DURANGO','ESTADO DE MÉXICO','GUANAJUATO','GUERRERO','HIDALGO','JALISCO','MICHOACÁN','MORELOS','NAYARIT','NUEVO LEÓN','OAXACA','PUEBLA','QUERÉTARO','QUINTANA ROO','SAN LUIS POTOSÍ','SINALOA','SONORA','TABASCO','TAMAULIPAS','TLAXCALA','VERACRUZ','YUCATÁN','ZACATECAS']
+    enum: ['AGUASCALIENTES', 'BAJA CALIFORNIA', 'BAJA CALIFORNIA SUR', 'CAMPECHE', 'CHIAPAS', 'CHIHUAHUA', 'CIUDAD DE MÉXICO', 'COAHUILA', 'COLIMA', 'DURANGO', 'ESTADO DE MÉXICO', 'GUANAJUATO', 'GUERRERO', 'HIDALGO', 'JALISCO', 'MICHOACÁN', 'MORELOS', 'NAYARIT', 'NUEVO LEÓN', 'OAXACA', 'PUEBLA', 'QUERÉTARO', 'QUINTANA ROO', 'SAN LUIS POTOSÍ', 'SINALOA', 'SONORA', 'TABASCO', 'TAMAULIPAS', 'TLAXCALA', 'VERACRUZ', 'YUCATÁN', 'ZACATECAS']
   },
   municipio: {
     type: String,
@@ -96,7 +96,6 @@ const colaboradorSchema = mongoose.Schema({
     required: true,
     min: 5,
     max: 100
-    
   },
   codigoPostal: {
     type: String,
