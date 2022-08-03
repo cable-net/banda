@@ -32,9 +32,17 @@ router.post('/', async (req, res) => {
       { error: error.details[0].message }
     )
   }
+
+  const isEmailExist = await Colaborador.findOne({ email: req.body.email })
+  if (isEmailExist) {
+    return res.status(400).json(
+      { error: 'Este email ya existe' }
+    )
+  }
+  
   const colaborador = new Colaborador({
 
-    nombre: req.body.primerNombre,
+    nombre: req.body.nombre,
     segundoNombre: req.body.segundoNombre,
     paterno: req.body.paterno,
     materno: req.body.materno,
@@ -55,12 +63,8 @@ router.post('/', async (req, res) => {
   })
 
   try {
-    const saveColaborador = await colaborador.save()
-    res.json({
-      error: null,
-      data: saveColaborador
-    })
-    console.log('colaborador guardado')
+    const savedColaborador = await colaborador.save()
+    res.status(201).json(savedColaborador)    
   } catch (error) {
     res.status(400).json({ error })
   }
