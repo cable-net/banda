@@ -40,7 +40,7 @@ describe('Pruebas para la autenticacion en la plataforma', () => {
       }
       const res = await request(app).post('/api/colaborador').set('auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTVmZDEzODJlYWMwMmQ3NWI4ZGE3NCIsImlhdCI6MTY1OTIzOTcwMH0.AV5WVSIY63cRGMDcJEHFFHVuPiALwcJAJuSt3oS962o').send(colaborador)
       expect(res.status).to.equal(201)
-      expect(res.body).to.have.include.keys('_id')      
+      expect(res.body).to.have.include.keys('_id')
     })
 
     it('deberia retornar un error porque el email ya existe', async () => {
@@ -70,7 +70,7 @@ describe('Pruebas para la autenticacion en la plataforma', () => {
       expect(res.status).to.equal(400)
       expect(res.body.error).to.equal('Este email ya existe')
     })
-   
+
     it('deberia retornar un error porque el segundo nombre no cumple con el formato', async () => {
       const colaborador = {
         nombre: 'Roman',
@@ -116,8 +116,8 @@ describe('Pruebas para la autenticacion en la plataforma', () => {
         estado: 'HIDALGO',
         municipio: 'Mixquiahuala',
         colonia: 'El Bondho',
-        codigoPostal: '42700' 
-        
+        codigoPostal: '42700'
+
       }
       const res = await request(app).post('/api/colaborador').set('auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTVmZDEzODJlYWMwMmQ3NWI4ZGE3NCIsImlhdCI6MTY1OTIzOTcwMH0.AV5WVSIY63cRGMDcJEHFFHVuPiALwcJAJuSt3oS962o').send(colaborador)
       expect(res.status).to.equal(400)
