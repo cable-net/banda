@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
   const isEmailExistOut = await httpOut.emailRegistered(req.body.email, req.header('auth-token'))
   if (isEmailExistOut) {
     return res.status(400).json(
-      { error: 'Este email ya existe' }
+      { error: 'Este email ya tiene un usuario' }
     )
   }
 
