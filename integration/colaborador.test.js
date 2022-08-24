@@ -2,13 +2,20 @@ const chai = require('chai')
 const expect = chai.expect
 const request = require('supertest')
 const mongoose = require('mongoose')
+const sinon = require('sinon')
 
 const app = require('../app')
 const Colaborador = require('../models/colaborador')
+const httpOut = require('../http-out/auth')
+const sandbox = sinon.createSandbox()
+const emailRegisteredOut = 'perla0824477@gmail.com'
 
 describe('Pruebas para la autenticacion en la plataforma', () => {
   before(async () => {
     // before each test delete all users table data
+    sandbox.stub(httpOut, 'emailRegistered').callsFake((email) => {
+      return (email === emailRegisteredOut)
+    })
     await Colaborador.deleteMany({})
   })
 
@@ -40,7 +47,7 @@ describe('Pruebas para la autenticacion en la plataforma', () => {
       }
       const res = await request(app).post('/api/colaborador').set('auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTVmZDEzODJlYWMwMmQ3NWI4ZGE3NCIsImlhdCI6MTY1OTIzOTcwMH0.AV5WVSIY63cRGMDcJEHFFHVuPiALwcJAJuSt3oS962o').send(colaborador)
       expect(res.status).to.equal(201)
-      expect(res.body).to.have.include.keys('_id')      
+      expect(res.body).to.have.include.keys('_id')
     })
 
     it('deberia retornar un error porque el email ya existe', async () => {
@@ -70,7 +77,35 @@ describe('Pruebas para la autenticacion en la plataforma', () => {
       expect(res.status).to.equal(400)
       expect(res.body.error).to.equal('Este email ya existe')
     })
-   
+
+    it('deberia retornar un error porque el email ya tiene un usuario', async () => {
+      const colaborador = {
+        nombre: 'Lola',
+        segundoNombre: 'Regina',
+        paterno: 'Diaz',
+        materno: 'Conde',
+        email: emailRegisteredOut,
+        telefono: '017722841163',
+        telefonoExtra: '017788558882',
+        fechaNacimiento: '2000-07-18 00:00:00',
+        tipoColaborador: 'SUPERVISOR',
+        curp: 'PEHT860817MHGGRN06',
+        rfc: 'PEC711225544',
+        genero: 'FEMENINO',
+        calleNumero: 'Francisco MUJICA 39',
+        referencia: 'entre Av.16 deseptiembre y Av. Hidalgo',
+        estado: 'HIDALGO',
+        municipio: 'Mixquiahuala',
+        colonia: 'El Bondho',
+        codigoPostal: '42700'
+      }
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTVmZDEzODJlYWMwMmQ3NWI4ZGE3NCIsImlhdCI6MTY1OTIzOTcwMH0.AV5WVSIY63cRGMDcJEHFFHVuPiALwcJAJuSt3oS962o'
+      await request(app).post('/api/colaborador').set('auth-token', token).send(colaborador)
+      const res = await request(app).post('/api/colaborador').set('auth-token', token).send(colaborador)
+      expect(res.status).to.equal(400)
+      expect(res.body.error).to.equal('Este email ya tiene un usuario')
+    })
+
     it('deberia retornar un error porque el segundo nombre no cumple con el formato', async () => {
       const colaborador = {
         nombre: 'Roman',
@@ -116,8 +151,8 @@ describe('Pruebas para la autenticacion en la plataforma', () => {
         estado: 'HIDALGO',
         municipio: 'Mixquiahuala',
         colonia: 'El Bondho',
-        codigoPostal: '42700' 
-        
+        codigoPostal: '42700'
+
       }
       const res = await request(app).post('/api/colaborador').set('auth-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTVmZDEzODJlYWMwMmQ3NWI4ZGE3NCIsImlhdCI6MTY1OTIzOTcwMH0.AV5WVSIY63cRGMDcJEHFFHVuPiALwcJAJuSt3oS962o').send(colaborador)
       expect(res.status).to.equal(400)

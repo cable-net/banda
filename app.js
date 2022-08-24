@@ -13,8 +13,8 @@ const uri = `mongodb+srv://${process.env.USUARIO}:${process.env.PASSWORD}@cluste
 mongoose.connect(uri,
   { useNewUrlParser: true, useUnifiedTopology: true }
 )
-  .then(() => console.log('Base de datos conectada'))
-  .catch(e => console.log('error db:', e))
+  .then(() => console.warn('Base de datos conectada'))
+  .catch(e => console.warn('error db:', e))
 
 const healthRoutes = require('./routes/health')
 const colaboradorRoutes = require('./routes/colaborador')
