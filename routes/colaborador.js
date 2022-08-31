@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
   const [error, model] = adapter.bodyToModel(req.body)
   if (error) {
     return res.status(400).json(
-      { error: 'Datos invalidos' }
+      { error: error.details[0].message }
     )
   }
 
@@ -26,9 +26,16 @@ router.post('/', async (req, res) => {
     )
   }
 
-  const colaborador = new Colaborador(model)    
+  const colaborador = new Colaborador(model)
   try {
     const savedColaborador = await colaborador.save()
+    const usuario = adapter.colaboradorToUsuario(savedColaborador)
+    const isUserRegistered = await httpOut.registerUsuario(usuario, req.header('auth-token'))
+    if (!isUserRegistered) {
+      return res.status(400).json(
+        { error: 'Informacion almacenada parcialmente' }
+      )
+    }
     res.status(201).json(savedColaborador)
   } catch (error) {
     res.status(400).json({ error })
