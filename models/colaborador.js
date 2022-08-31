@@ -49,7 +49,7 @@ const colaboradorSchema = mongoose.Schema({
   tipoColaborador: {
     type: String,
     required: true,
-    enum: ['VENTAS', 'TECNICOS', 'SUPERVISOR', 'GERENTE', 'CONTADOR']
+    enum: ['TECNICO', 'CAJERO', 'SUPERVISOR']
   },
   curp: {
     type: String,

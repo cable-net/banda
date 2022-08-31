@@ -23,7 +23,7 @@ describe('Pruebas para el adapter de colaborador: ', () => {
         estado: 'HIDALGO',
         municipio: 'Mixquiahuala',
         colonia: 'El Bondho',
-        codigoPostal: '42700'        
+        codigoPostal: '42700'
       }
       const [error, model] = adapter.bodyToModel(body)
       expect(error).to.equal(undefined)
@@ -45,7 +45,7 @@ describe('Pruebas para el adapter de colaborador: ', () => {
         estado: 'HIDALGO',
         municipio: 'Mixquiahuala',
         colonia: 'El Bondho',
-        codigoPostal: '42700'           
+        codigoPostal: '42700'
       })
     })
     it('Deberia retornar un error porque el rfc no cumple con el formato', () => {
@@ -67,7 +67,7 @@ describe('Pruebas para el adapter de colaborador: ', () => {
         estado: 'HIDALGO',
         municipio: 'Mixquiahuala',
         colonia: 'El Bondho',
-        codigoPostal: '42700'        
+        codigoPostal: '42700'
       }
       const [error, model] = adapter.bodyToModel(body)
       expect(model).to.equal(undefined)

@@ -1,5 +1,8 @@
 const Joi = require('@hapi/joi').extend(require('@joi/date'))
 
+const USER_TYPE_COLABORADOR = 'colaborador'
+const PASSWORD_DEFAULT = 'D3fault#'
+
 const colaboradorSchema = Joi.object({
   nombre: Joi.string().min(2).max(20).required(),
   segundoNombre: Joi.string().min(2).max(20).required(),
@@ -9,7 +12,7 @@ const colaboradorSchema = Joi.object({
   telefono: Joi.string().min(12).max(12).required(),
   telefonoExtra: Joi.string().min(12).max(12).required(),
   fechaNacimiento: Joi.date().format('YYYY-MM-DD HH:mm:ss').utc().required(),
-  tipoColaborador: Joi.string().valid('VENTAS', 'TECNICOS', 'SUPERVISOR', 'GERENTE', 'CONTADOR').required(),
+  tipoColaborador: Joi.string().valid('TECNICO', 'CAJERO', 'SUPERVISOR').required(),
   curp: Joi.string().min(18).max(18).required(),
   rfc: Joi.string().min(12).max(12).required(),
   genero: Joi.string().valid('MASCULINO', 'FEMENINO').required(),
@@ -44,7 +47,17 @@ module.exports.bodyToModel = function (body) {
     estado: body.estado,
     municipio: body.municipio,
     colonia: body.colonia,
-    codigoPostal: body.codigoPostal    
+    codigoPostal: body.codigoPostal
   }
   return [error, model]
+}
+
+module.exports.colaboradorToUsuario = function (colaborador) {
+  return {
+    email: colaborador.email,
+    password: PASSWORD_DEFAULT,
+    user_id: colaborador._id,
+    user_type: USER_TYPE_COLABORADOR,
+    role: colaborador.tipoColaborador
+  }
 }
