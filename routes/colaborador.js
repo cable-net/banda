@@ -6,12 +6,10 @@ const adapter = require('../adapters/colaborador')
 
 router.get('/:id', async (req, res) => {
   const isIdExist = await Colaborador.findOne({ _id: req.params.id})
-  console.log('a qui ya pase a')
   if (isIdExist) {
     return res.status(200).json(isIdExist)   
   }
   else {
-    console.log('a qui ya pase')
     return res.status(404).json(      
       { error: 'Este id no se encuentra' }      
     )

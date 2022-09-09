@@ -188,8 +188,7 @@ describe('Pruebas para la autenticacion en la plataforma', () => {
       const res = await request(app).post('/api/colaborador').set('auth-token', token).send(colaborador)
       expect(res.status).to.equal(400)
       expect(res.body.error).to.equal('Informacion almacenada parcialmente')
-    })
-    
+    })    
     it('deberia retornar un colaborador con su id', async () => {
       const colaborador = {
       nombre: 'Talia',
@@ -218,34 +217,11 @@ describe('Pruebas para la autenticacion en la plataforma', () => {
       expect(res.status).to.equal(200)
       expect(res.body).to.have.include.keys('_id')
     })
-    it('deberia fallar', async () => {
-      const colaborador = {
-      nombre: 'Talia',
-      segundoNombre: 'Regina',
-      paterno: 'Garcia',
-      materno: 'Conde',
-      email: 'pruebaintegracionget@gmail.com',
-      telefono: '017722841133',
-      telefonoExtra: '017788558887',
-      fechaNacimiento: '2000-08-18 00:00:00',
-      tipoColaborador: 'SUPERVISOR',
-      curp: 'DAHT860817MHGGRN05',
-      rfc: 'TAC711225544',
-      genero: 'FEMENINO',
-      calleNumero: 'Francisco Villa 39',
-      referencia: 'entre Av.16 deseptiembre y Av. Hidalgo',
-      estado: 'HIDALGO',
-      municipio: 'Mixquiahuala',
-      colonia: 'El Bondho',
-      codigoPostal: '42700'
-      }
+    it('deberia retornar un error porque el colaborador esta parcialmente almacenados', async () => {
       const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTVmZDEzODJlYWMwMmQ3NWI4ZGE3NCIsImlhdCI6MTY1OTIzOTcwMH0.AV5WVSIY63cRGMDcJEHFFHVuPiALwcJAJuSt3oS962o'
-      const response = await request(app).post('/api/colaborador').set('auth-token', token).send(colaborador)      
-      const id = response.body._id
-      const res = await request(app).get('/api/colaborador/' + id  ).set('auth-token', token)
-      expect(res.status).to.equal(200)
-      expect(res.body).to.have.include.keys('_id')
+      const res = await request(app).get('/api/colaborador/6318260b5371d769eddfcc2a').set('auth-token', token)
+      expect(res.status).to.equal(404)
+      expect(res.body.error).to.equal('Este id no se encuentra')
     })
-    
   })
 })
