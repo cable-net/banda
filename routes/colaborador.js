@@ -4,6 +4,18 @@ const httpOut = require('../http-out/auth')
 const Colaborador = require('../models/colaborador')
 const adapter = require('../adapters/colaborador')
 
+router.get('/:id', async (req, res) => {
+  const isIdExist = await Colaborador.findOne({ _id: req.params.id })
+  if (isIdExist) {
+    return res.status(200).json(isIdExist)
+  }
+  else {
+    return res.status(404).json(
+      { error: 'Este id no se encuentra' }
+    )
+  }
+})
+
 router.post('/', async (req, res) => {
   const [error, model] = adapter.bodyToModel(req.body)
   if (error) {
